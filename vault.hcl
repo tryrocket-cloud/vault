@@ -5,8 +5,8 @@ listener "tcp" {
     tls_disable = 1
 }
 
-storage "file" {
-    path = "/vault/file"
+storage "postgresql" {
+  connection_url = "postgresql://vault:vault@postgres:5432/vault"
 }
 
 api_addr = "http://0.0.0.0:8200"
