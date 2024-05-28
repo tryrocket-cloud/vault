@@ -27,3 +27,7 @@ Secrets management
     docker exec -it vault vault operator unseal zumRSev82ycqnz9sDXYfuylUkk46gQZTxDQAAmYSZ/7o
 
     Note: this step has to be performed each time the vault container is restarted.
+
+## Get latest release
+
+    ansible-playbook latest-release.yaml --extra-vars "repository=hashicorp/vault"
