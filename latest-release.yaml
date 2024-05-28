@@ -1,0 +1,17 @@
+---
+- name: Get latest release from GitHub
+  hosts: localhost
+  gather_facts: false
+
+  tasks:
+    - name: Get repository releases
+      ansible.builtin.uri:
+        url: 'https://api.github.com/repos/{{ repository }}/releases/latest'
+        return_content: true
+        headers:
+          Accept: 'application/vnd.github.v3+json'
+      register: release_info
+
+    - name: Print latest release version
+      ansible.builtin.debug:
+        msg: 'Latest release version is {{ release_info.json.tag_name }}'
