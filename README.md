@@ -1,7 +1,7 @@
 # vault
 Secrets management
 
-## Set up
+## Set up v1
 
     mkdir vault-data
     docker compose up
@@ -31,3 +31,6 @@ Secrets management
 ## Get latest release
 
     ansible-playbook latest-release.yaml --extra-vars "repository=hashicorp/vault"
+## Setup V2
+
+    https://developer.hashicorp.com/vault/docs/configuration/storage/postgresql
