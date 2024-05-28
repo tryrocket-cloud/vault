@@ -1,6 +1,30 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:16.3-alpine
+    container_name: postgres
+    environment:
+      POSTGRES_USER: vault
+      POSTGRES_PASSWORD: vault
+      POSTGRES_DB: vault
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
+    networks:
+      - vault-network
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+    ports:
+      - "8085:8080"
+    networks:
+      - vault-network
+    depends_on:
+      - postgres
+
   vault:
     image: hashicorp/vault:1.16.2
     container_name: vault
@@ -9,8 +33,14 @@ services:
     ports:
         - "8200:8200"
     volumes:
-        - ./vault-data:/vault/file:rw
-        - ./vault.hcl:/vault/config/vault.hcl:rw
+        - ./vault.hcl:/vault/config/vault.hcl
     cap_add:
         - IPC_LOCK
     entrypoint: vault server -config=/vault/config/vault.hcl
+    networks:
+      - vault-network
+    depends_on:
+      - postgres
+
+networks:
+  vault-network:
